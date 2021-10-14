@@ -16,7 +16,7 @@ import {
 } from './styles'
 
 const Sidebar: React.FunctionComponent = ({ ...props }) => {
-  const { signOut } = useAuth()
+  const { signOut, user } = useAuth()
   const navigation = useNavigation()
 
   return (
@@ -26,12 +26,14 @@ const Sidebar: React.FunctionComponent = ({ ...props }) => {
           <Image
             style={{ resizeMode: 'cover' }}
             source={{
-              uri: 'https://avatars.githubusercontent.com/u/49557710?v=4',
+              uri: user.avatar
+                ? user.avatar
+                : 'https://www.iconfinder.com/icons/628298/download/png/512',
             }}
           />
           <Info>
-            <Name>Luis Fernando Peixoto</Name>
-            <NickName>@LuisPeixoto</NickName>
+            <Name>{user.name}</Name>
+            <NickName>@{user.username}</NickName>
           </Info>
         </User>
       </Header>

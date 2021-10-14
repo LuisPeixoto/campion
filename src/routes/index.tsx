@@ -23,10 +23,10 @@ const Routes: React.FC = () => {
   }
   return user ? (
     <>
-      <AuthRoutes />
+      <AppRoutes />
     </>
   ) : (
-    <AppRoutes />
+    <AuthRoutes />
   )
 }
 

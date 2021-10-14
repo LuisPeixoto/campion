@@ -42,18 +42,7 @@ const AppRoutes: React.FunctionComponent = () => (
           name="Contacts"
           component={Contacts}
           options={{
-            headerTitle: 'Contatos',
-            headerRight: () => (
-              <TouchableOpacity
-                style={{
-                  marginRight: 16,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Icon name="plus" color="#fff" size={32} />
-              </TouchableOpacity>
-            ),
+            headerTitle: 'Nova Conversa',
           }}
         />
 
@@ -63,11 +52,7 @@ const AppRoutes: React.FunctionComponent = () => (
           component={Search}
         />
 
-        <App.Screen
-          name="Chat"
-          options={{ title: 'Luis Fernando Peixoto' }}
-          component={Chat}
-        />
+        <App.Screen name="Chat" component={Chat} />
       </App.Navigator>
     </LinearGradient>
   </>

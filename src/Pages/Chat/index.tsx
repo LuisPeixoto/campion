@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Image, Text, View } from 'react-native'
 import { Container } from './styles'
 
@@ -9,6 +9,11 @@ import {
   Bubble,
 } from 'react-native-gifted-chat'
 import icon from '../../assets/icon.png'
+import io from 'socket.io-client'
+import { useAuth } from '../../hooks/auth'
+
+import Api from '../../services/api'
+import { useNavigation } from '@react-navigation/core'
 
 const renderSend: React.FunctionComponent = (props) => {
   return (
@@ -80,38 +85,76 @@ const renderInputToolbar: React.FunctionComponent = (props) => {
   )
 }
 
-const Chat: React.FunctionComponent = () => {
+interface Route {
+  route: {
+    params: {
+      _id: string
+      date: string
+      members: object
+      user_name: string
+    }
+  }
+}
+
+const Chat: React.FunctionComponent<Route> = ({ route }) => {
   const [messages, setMessages] = useState([])
 
-  useEffect(() => {
-    setMessages([
-      {
-        _id: 2,
-        text: 'Tudo bem?',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'Luis',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-      {
-        _id: 1,
-        text: 'Olá',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'Luis',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-    ])
-  }, [])
+  const { _id, date, members, user_name } = route.params
+  const { user } = useAuth()
+  const navigation = useNavigation()
 
-  const onSend = useCallback((messages = []) => {
+  navigation.setOptions({
+    title: user_name,
+  })
+
+  const [currentChat, setCurrentChat] = useState({
+    _id,
+    members,
+  })
+
+  const socket = useMemo(() => {
+    return io('http://10.0.10.213:3000', {
+      query: { user_id: user._id },
+    })
+  }, [user])
+
+  useEffect(() => {
+    socket.on('response', (data) => {
+      console.log(data)
+      setMessages((prevState) => GiftedChat.append(prevState, data))
+    })
+  }, [socket])
+
+  useEffect(() => {
+    const getMessages = async () => {
+      try {
+        const res = await Api.get('/message/' + currentChat?._id)
+        setMessages(res.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getMessages()
+  }, [currentChat])
+
+  const onSend = useCallback(async (messages = []) => {
     setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, messages),
     )
+    const receiverId = currentChat.members.find((member) => member !== user._id)
+
+    const message = {
+      sender: user._id,
+      receiver: receiverId,
+      text: messages[0].text,
+      chatId: currentChat._id,
+    }
+
+    try {
+      await Api.post('/message', message)
+    } catch (err) {
+      console.log(err)
+    }
   }, [])
 
   return (
@@ -151,7 +194,7 @@ const Chat: React.FunctionComponent = () => {
         renderBubble={renderBubble}
         onSend={(messages) => onSend(messages)}
         user={{
-          _id: 1,
+          _id: user._id,
         }}
       />
     </View>

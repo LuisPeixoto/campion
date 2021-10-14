@@ -31,7 +31,7 @@ const SignUp: React.FunctionComponent = () => {
 
   interface SignInFormData {
     name: string
-    email: string
+    username: string
     password: string
   }
 
@@ -41,7 +41,7 @@ const SignUp: React.FunctionComponent = () => {
         formRef.current?.setErrors({})
         const schema = Yup.object().shape({
           name: Yup.string().required('Nome obrigatório'),
-          email: Yup.string().required('Email obrigatório').email(),
+          username: Yup.string().required('username é obrigatório'),
           password: Yup.string().min(8, 'Senha obrigatória'),
         })
 
@@ -49,7 +49,7 @@ const SignUp: React.FunctionComponent = () => {
           abortEarly: false,
         })
 
-        await Api.post('/users', data)
+        await Api.post('/auth/register', data)
 
         Alert.alert(
           'Cadastro realizado com sucesso!',
@@ -99,12 +99,12 @@ const SignUp: React.FunctionComponent = () => {
               />
               <Input
                 autoCorrect={false}
-                name="email"
+                name="username"
                 ref={emailInputRef}
                 autoCapitalize="none"
-                keyboardType="email-address"
-                icon="mail"
-                placeholder="E-mail"
+                keyboardType="default"
+                icon="user"
+                placeholder="Username"
                 returnKeyType="next"
                 onSubmitEditing={() => {
                   passwordInputRef.current?.focus()

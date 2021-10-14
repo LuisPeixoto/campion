@@ -3,14 +3,8 @@ import styled from 'styled-components/native'
 
 export const Container = styled.ScrollView`
   flex: 1;
-  padding: 16px;
 `
 
-export const Title = styled.Text`
-  font-size: 28px;
-  font-family: 'Lato-Light';
-  color: #fbf4ee;
-`
 export const Content = styled.View`
   flex: 1;
   margin-top: 16px;

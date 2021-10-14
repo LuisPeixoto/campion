@@ -14,7 +14,7 @@ interface AuthState {
 }
 
 interface SigninCredentials {
-  email: string
+  username: string
   password: string
 }
 
@@ -34,8 +34,8 @@ export const AuthProvider: React.FunctionComponent = ({ children }) => {
   useEffect(() => {
     async function loadStorageData(): Promise<void> {
       const [token, user] = await AsyncStorage.multiGet([
-        '@Finz:token',
-        '@Finz:user',
+        '@Campion:token',
+        '@Campion:user',
       ])
 
       if (token[1] && user[1]) {
@@ -47,23 +47,25 @@ export const AuthProvider: React.FunctionComponent = ({ children }) => {
     }
     loadStorageData()
   }, [])
-  const signIn = useCallback(async ({ email, password }) => {
-    const response = await api.post('sessions', {
-      email,
+  const signIn = useCallback(async ({ username, password }) => {
+    console.log(`sadad`)
+
+    const response = await api.post('auth/login', {
+      username,
       password,
     })
 
     const { token, user } = response.data
 
-    await AsyncStorage.setItem('@Finz:token', token)
-    await AsyncStorage.setItem('@Finz:user', JSON.stringify(user))
+    await AsyncStorage.setItem('@Campion:token', token)
+    await AsyncStorage.setItem('@Campion:user', JSON.stringify(user))
 
     setData({ token, user })
   }, [])
 
   const signOut = useCallback(async () => {
-    await AsyncStorage.removeItem('@Finz:token')
-    await AsyncStorage.removeItem('@Finz:user')
+    await AsyncStorage.removeItem('@Campion:token')
+    await AsyncStorage.removeItem('@Campion:user')
 
     setData({} as AuthState)
   }, [])

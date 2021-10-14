@@ -11,8 +11,3 @@ export const Title = styled.Text`
   color: #fbf4ee;
   margin-bottom: 24px;
 `
-
-export const Content = styled.ScrollView`
-  padding: 16px;
-  flex: 1;
-`

@@ -50,7 +50,11 @@ const Header: React.FunctionComponent = ({ navigation }) => {
           <Icon name="search" color="#fff" size={24} />
         </Search>
 
-        <NewPosts>
+        <NewPosts
+          onPress={() => {
+            Navigation.navigate('Contacts')
+          }}
+        >
           <Icon name="plus" color="#fff" size={32} />
         </NewPosts>
       </Buttons>

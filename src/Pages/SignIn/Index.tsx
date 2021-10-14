@@ -32,7 +32,7 @@ import * as Yup from 'yup'
 import { useAuth } from '../../hooks/auth'
 
 interface SignInFormData {
-  email: string
+  username: string
   password: string
 }
 
@@ -48,7 +48,7 @@ const SignIn: React.FunctionComponent = () => {
       try {
         formRef.current?.setErrors({})
         const schema = Yup.object().shape({
-          email: Yup.string().required('Email obrigatório').email(),
+          username: Yup.string().required('Nome de usuário obrigatório'),
           password: Yup.string().min(8, 'Senha obrigatória'),
         })
 
@@ -57,11 +57,9 @@ const SignIn: React.FunctionComponent = () => {
         })
 
         await signIn({
-          email: data.email,
+          username: data.username,
           password: data.password,
         })
-
-        // history.push('/')
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
           const errors = getValidationErrors(error)
@@ -93,12 +91,12 @@ const SignIn: React.FunctionComponent = () => {
             </View>
             <Form ref={formRef} onSubmit={handleSignIn}>
               <Input
-                name="email"
+                name="username"
                 autoCorrect={false}
                 autoCapitalize="none"
-                keyboardType="email-address"
-                icon="mail"
-                placeholder="E-mail"
+                keyboardType="default"
+                icon="user"
+                placeholder="Nome de usuário"
                 returnKeyType="next"
                 onSubmitEditing={() => {
                   passwordInputRef.current?.focus()

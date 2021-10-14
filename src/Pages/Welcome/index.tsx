@@ -9,9 +9,7 @@ const Welcome: React.FunctionComponent = () => {
   const navigation = useNavigation()
   return (
     <Container colors={['#312E37', '#282829']}>
-      <Title>
-        Junte-se a nossa rede e comece a compartilhar as suas ideias
-      </Title>
+      <Title>Troque mensagens com outros usuários</Title>
       <Vector>
         <Image source={vectorImg} />
       </Vector>

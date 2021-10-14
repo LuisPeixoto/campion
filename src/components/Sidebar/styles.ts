@@ -24,6 +24,7 @@ export const Name = styled.Text`
   font-size: 16px;
   color: #eee7e2;
   margin-top: 8px;
+  text-align: center;
 
   font-family: 'Lato-Bold';
 `
