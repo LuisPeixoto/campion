@@ -1,89 +1,16 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Image, Text, View } from 'react-native'
-import { Container } from './styles'
-
-import {
-  GiftedChat,
-  InputToolbar,
-  Send,
-  Bubble,
-} from 'react-native-gifted-chat'
-import icon from '../../assets/icon.png'
 import io from 'socket.io-client'
+import { GiftedChat } from 'react-native-gifted-chat'
+
+import { API_URL } from 'react-native-dotenv'
 import { useAuth } from '../../hooks/auth'
-
 import Api from '../../services/api'
+
 import { useNavigation } from '@react-navigation/core'
-
-const renderSend: React.FunctionComponent = (props) => {
-  return (
-    <Send
-      {...props}
-      containerStyle={{ justifyContent: 'center', alignItems: 'center' }}
-    >
-      <Container icon={icon}>
-        <Image source={icon} style={{ width: 30, height: 27 }} />
-      </Container>
-    </Send>
-  )
-}
-
-const renderBubble: React.FunctionComponent = (props) => {
-  return (
-    <Bubble
-      {...props}
-      wrapperStyle={{
-        right: {
-          padding: 8,
-          borderRadius: 0,
-          borderTopRightRadius: 20,
-          borderTopLeftRadius: 20,
-          borderBottomRightRadius: 0,
-          borderBottomLeftRadius: 20,
-          backgroundColor: '#C1C1C1',
-        },
-        left: {
-          padding: 8,
-          borderTopRightRadius: 20,
-          borderTopLeftRadius: 20,
-          borderBottomRightRadius: 20,
-          borderBottomLeftRadius: 0,
-          backgroundColor: '#23222A',
-        },
-      }}
-      textStyle={{
-        right: {
-          fontSize: 16,
-          fontFamily: 'Lato-Regular',
-          color: '#000000',
-        },
-
-        left: {
-          fontSize: 16,
-          fontFamily: 'Lato-Regular',
-          color: '#C1C1C1',
-        },
-      }}
-    />
-  )
-}
-
-const renderInputToolbar: React.FunctionComponent = (props) => {
-  return (
-    <InputToolbar
-      {...props}
-      primaryStyle={{
-        borderRadius: 10,
-        padding: 5,
-      }}
-      containerStyle={{
-        borderTopWidth: 0,
-        backgroundColor: '#312E37',
-        padding: 10,
-      }}
-    />
-  )
-}
+import { ButtonSend } from '../../components/Chat/ButtonSend'
+import { Bubble } from '../../components/Chat/Bubble'
+import { InputToolbar } from '../../components/Chat/InputToolbar'
+import { Container, ChatContent } from './styles'
 
 interface Route {
   route: {
@@ -113,14 +40,13 @@ const Chat: React.FunctionComponent<Route> = ({ route }) => {
   })
 
   const socket = useMemo(() => {
-    return io('http://10.0.10.213:3000', {
+    return io(API_URL, {
       query: { user_id: user._id },
     })
   }, [user])
 
   useEffect(() => {
     socket.on('response', (data) => {
-      console.log(data)
       setMessages((prevState) => GiftedChat.append(prevState, data))
     })
   }, [socket])
@@ -158,46 +84,22 @@ const Chat: React.FunctionComponent<Route> = ({ route }) => {
   }, [])
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#312E37' }}>
-      <GiftedChat
-        listViewProps={{
-          style: {
-            backgroundColor: '#312E37',
-          },
-        }}
+    <Container>
+      <ChatContent
         renderAvatar={() => null}
         showAvatarForEveryMessage={true}
-        placeholderTextColor="#676266"
         placeholder="Digite uma mensagem"
-        minInputToolbarHeight={80}
-        renderInputToolbar={renderInputToolbar}
+        renderInputToolbar={InputToolbar}
         messages={messages}
         alwaysShowSend
-        textInputProps={{
-          style: {
-            backgroundColor: '#23222A',
-            borderRadius: 8,
-            fontSize: 16,
-            marginRight: 15,
-            paddingHorizontal: 20,
-            paddingVertical: 10,
-            color: '#C1C1C1',
-            flex: 1,
-          },
-        }}
-        timeTextStyle={{
-          right: {
-            color: '#000',
-          },
-        }}
-        renderSend={renderSend}
-        renderBubble={renderBubble}
+        renderSend={ButtonSend}
+        renderBubble={Bubble}
         onSend={(messages) => onSend(messages)}
         user={{
           _id: user._id,
         }}
       />
-    </View>
+    </Container>
   )
 }
 
