@@ -62,7 +62,7 @@ const Messages: React.FunctionComponent<Message> = ({
             />
             <Info>
               <Name>{user.name}</Name>
-              <MessagePreview>{lastMessage}</MessagePreview>
+              <MessagePreview numberOfLines={1}>{lastMessage}</MessagePreview>
             </Info>
           </User>
 

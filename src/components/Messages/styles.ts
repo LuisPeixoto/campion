@@ -44,6 +44,7 @@ export const Date = styled.View`
 `
 export const MessagePreview = styled.Text`
   color: #837e81;
+  width: 90%;
   margin-top: 6px;
   font-size: 16px;
   font-family: 'Lato-Regular';

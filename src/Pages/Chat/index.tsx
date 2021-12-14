@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import io from 'socket.io-client'
 import { GiftedChat } from 'react-native-gifted-chat'
 
+// @ts-ignore
 import { API_URL } from 'react-native-dotenv'
 import { useAuth } from '../../hooks/auth'
 import Api from '../../services/api'

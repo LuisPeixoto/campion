@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation, useFocusEffect } from '@react-navigation/core'
 import React, { useCallback, useEffect, useState } from 'react'
 import { ActivityIndicator, View, FlatList } from 'react-native'
 import Contact from '../../components/Contact'
@@ -12,31 +12,24 @@ const Contacts: React.FunctionComponent = () => {
   const [chats, setChats] = useState([])
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    const getChats = async () => {
-      try {
-        const res = await Api.get('/user/all')
-        const data = []
+  useFocusEffect(
+    useCallback(() => {
+      const getChats = async () => {
+        try {
+          const res = await Api.get(`user/followers/${user._id}`)
+          console.log('dasdadadsa' + res.data)
 
-        res.data.forEach((element) => {
-          if (element._id !== user._id) {
-            data.push(element)
-          }
-        })
-
-        setChats(data)
-
-        console.log(chats.find((id) => id !== user._id))
-      } catch (error) {
-        console.log(error)
-      } finally {
-        setLoading(false)
+          setChats(res.data)
+        } catch (error) {
+          console.log(error)
+        } finally {
+          setLoading(false)
+        }
       }
-    }
-    getChats()
-  }, [user])
+      getChats()
+    }, []),
+  )
 
-  console.log(chats)
   return (
     <Container colors={['#312E37', '#282829']}>
       {loading ? (

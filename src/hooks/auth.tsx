@@ -48,19 +48,24 @@ export const AuthProvider: React.FunctionComponent = ({ children }) => {
     loadStorageData()
   }, [])
   const signIn = useCallback(async ({ username, password }) => {
-    console.log(`sadad`)
 
-    const response = await api.post('auth/login', {
-      username,
-      password,
-    })
-
+    try {
+      const response = await api.post('auth/login', {
+        username,
+        password,
+      })
+      
     const { token, user } = response.data
 
     await AsyncStorage.setItem('@Campion:token', token)
     await AsyncStorage.setItem('@Campion:user', JSON.stringify(user))
 
     setData({ token, user })
+      
+    } catch (error) {
+      console.log(error)
+    }
+    
   }, [])
 
   const signOut = useCallback(async () => {
