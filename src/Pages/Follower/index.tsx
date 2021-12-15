@@ -1,13 +1,17 @@
 import { useNavigation, useFocusEffect } from '@react-navigation/core'
 import React, { useCallback, useEffect, useState } from 'react'
 import { ActivityIndicator, View, FlatList } from 'react-native'
-import Contact from '../../components/Contact'
+import Contact from '../../components/FollowerCard'
 import { useAuth } from '../../hooks/auth'
 import Api from '../../services/api'
 import Chat from '../Chat'
 import { Container, Title, Content } from './styles'
 
-const Contacts: React.FunctionComponent = () => {
+interface Props {
+  type: 'followers' | 'following' | 'contacts'
+}
+
+const Follower: React.FunctionComponent<Props> = ({ type }: Props) => {
   const { user } = useAuth()
   const [chats, setChats] = useState([])
   const [loading, setLoading] = useState(true)
@@ -16,8 +20,7 @@ const Contacts: React.FunctionComponent = () => {
     useCallback(() => {
       const getChats = async () => {
         try {
-          const res = await Api.get(`user/followers/${user._id}`)
-          console.log('dasdadadsa' + res.data)
+          const res = await Api.get(`user/${type}/${user._id}`)
 
           setChats(res.data)
         } catch (error) {
@@ -45,7 +48,6 @@ const Contacts: React.FunctionComponent = () => {
           keyExtractor={(item) => item._id}
           renderItem={({ item, index }) => (
             <>
-              {index === 0 && <Title>Lista de usuários</Title>}
               <Contact
                 id={item._id}
                 avatar={item.avatar}
@@ -60,4 +62,4 @@ const Contacts: React.FunctionComponent = () => {
   )
 }
 
-export default Contacts
+export default Follower

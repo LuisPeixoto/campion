@@ -19,7 +19,7 @@ interface UserProps {
   nickname: string
 }
 
-const Contact: React.FunctionComponent<UserProps> = ({
+const FollowerCard: React.FunctionComponent<UserProps> = ({
   id,
   avatar,
   name,
@@ -72,4 +72,4 @@ const Contact: React.FunctionComponent<UserProps> = ({
   )
 }
 
-export default Contact
+export default FollowerCard

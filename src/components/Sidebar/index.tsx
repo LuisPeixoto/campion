@@ -40,6 +40,27 @@ const Sidebar: React.FunctionComponent = ({ ...props }) => {
       <Content>
         <DrawerContentScrollView {...props}>
           <DrawerItem
+            label="Seguidores"
+            onPress={() => {
+              navigation.navigate('Profile')
+            }}
+            labelStyle={styles.text}
+            icon={({ color, size }) => (
+              <Icon name="user-plus" color="#EEE7E2" size={size} />
+            )}
+          />
+          <DrawerItem
+            label="Seguindo"
+            onPress={() => {
+              navigation.navigate('Following')
+            }}
+            labelStyle={styles.text}
+            icon={({ color, size }) => (
+              <Icon name="user-check" color="#EEE7E2" size={size} />
+            )}
+          />
+
+          <DrawerItem
             label="Contatos"
             onPress={() => {
               navigation.navigate('Contacts')
