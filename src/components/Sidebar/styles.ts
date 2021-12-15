@@ -1,7 +1,11 @@
 import LinearGradient from 'react-native-linear-gradient'
 import styled from 'styled-components/native'
+import { DrawerItem as drawerItem } from '@react-navigation/drawer'
+import icon from 'react-native-vector-icons/Feather'
 
-export const Container = styled(LinearGradient)`
+export const Container = styled(LinearGradient).attrs({
+  colors: ['#312E37', '#282829'],
+})`
   flex: 1;
 `
 export const User = styled.View`
@@ -13,7 +17,9 @@ export const User = styled.View`
   padding: 8px;
   border-radius: 5px;
 `
-export const Image = styled.Image`
+export const Image = styled.Image.attrs({
+  resizeMode: 'cover',
+})`
   width: 100px;
   height: 100px;
   margin-right: 8px;
@@ -51,3 +57,14 @@ export const Content = styled.View`
   width: 100%;
   height: 100%;
 `
+export const DrawerItem = styled(drawerItem).attrs({
+  labelStyle: {
+    color: '#EEE7E2',
+    fontFamily: 'Lato-Regular',
+    fontSize: 16,
+  },
+})``
+
+export const Icon = styled(icon).attrs({
+  color: '#EEE7E2',
+})``
