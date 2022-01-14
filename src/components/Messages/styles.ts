@@ -39,7 +39,7 @@ export const Name = styled.Text`
   font-size: 18px;
   font-family: 'Lato-Bold';
 `
-export const Date = styled.View`
+export const InfoLastMessage = styled.View`
   align-items: flex-end;
 `
 export const MessagePreview = styled.Text`
