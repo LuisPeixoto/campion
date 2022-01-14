@@ -19,6 +19,7 @@
     "@unform/core": "^2.1.6",
     "@unform/mobile": "^2.1.6",
     "axios": "^0.21.1",
+    "date-fns": "^2.27.0",
     "react": "17.0.1",
     "react-native": "0.64.1",
     "react-native-dotenv": "^3.3.0",
