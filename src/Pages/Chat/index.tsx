@@ -17,7 +17,6 @@ interface Route {
   route: {
     params: {
       _id: string
-      date: string
       members: object
       user_name: string
     }
