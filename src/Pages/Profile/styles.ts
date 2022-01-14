@@ -1,5 +1,6 @@
 import styled from 'styled-components/native'
 import icon from 'react-native-vector-icons/Feather'
+import { RectButton } from 'react-native-gesture-handler'
 
 export const Container = styled.View`
   flex: 1;
@@ -18,6 +19,7 @@ export const Content = styled.View`
 export const Image = styled.Image`
   width: 140px;
   height: 140px;
+  border-radius: 70px;
   margin-top: -15%;
   margin-bottom: 20px;
 `
@@ -70,9 +72,9 @@ export const ContainerInteraction = styled.View`
   align-items: center;
 `
 
-export const ContentInteraction = styled.View`
+export const ContentInteraction = styled(RectButton)`
   align-items: center;
-  margin: 20px;
+  padding: 20px;
 `
 export const CountInteraction = styled.Text`
   font-size: 20px;
