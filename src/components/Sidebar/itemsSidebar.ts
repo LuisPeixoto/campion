@@ -2,7 +2,7 @@ const items = [
   {
     label: 'Seguidores',
     icon: 'user-plus',
-    route: 'Profile',
+    route: 'Followers',
   },
 
   {

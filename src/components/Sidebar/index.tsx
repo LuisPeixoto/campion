@@ -28,7 +28,7 @@ const Sidebar: React.FunctionComponent = ({ ...props }) => {
             source={{
               uri: user.avatar
                 ? user.avatar
-                : 'https://www.iconfinder.com/icons/628298/download/png/512',
+                : `https://ui-avatars.com/api/?name=${user.name}&lenght=1&size=140&format=png`,
             }}
           />
           <Info>
