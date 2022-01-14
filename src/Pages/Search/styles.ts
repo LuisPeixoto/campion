@@ -1,3 +1,4 @@
+import { RectButton } from 'react-native-gesture-handler'
 import LinearGradient from 'react-native-linear-gradient'
 import styled from 'styled-components/native'
 
@@ -32,7 +33,9 @@ export const TextInput = styled.TextInput`
   font-family: 'Talo-Regular';
 `
 
-export const Content = styled.ScrollView`
+export const Content = styled.View`
   padding: 16px;
   flex: 1;
 `
+
+export const Button = styled(RectButton)``
