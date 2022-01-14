@@ -19,7 +19,7 @@ interface UserProps {
   nickname: string
 }
 
-const Contact: React.FunctionComponent<UserProps> = ({
+const FollowerCard: React.FunctionComponent<UserProps> = ({
   id,
   avatar,
   name,
@@ -49,18 +49,15 @@ const Contact: React.FunctionComponent<UserProps> = ({
     }
   }, [])
   return (
-    <Container
-      onPress={() => {
-        newChat(id, name)
-      }}
-    >
+    <Container>
       <Content>
         <Avatar
           style={{ resizeMode: 'cover' }}
           source={{
             uri:
-              avatar ||
-              'https://www.iconfinder.com/icons/628298/download/png/512',
+              avatar === ''
+                ? `https://ui-avatars.com/api/?name=${name}&lenght=1&size=140&format=png`
+                : avatar,
           }}
         />
         <Info>
@@ -72,4 +69,4 @@ const Contact: React.FunctionComponent<UserProps> = ({
   )
 }
 
-export default Contact
+export default FollowerCard

@@ -18,8 +18,17 @@ interface SigninCredentials {
   password: string
 }
 
+interface User {
+  _id: string
+  name: string
+  avatar: string
+  username: string
+  followers: object[]
+  followings: object[]
+}
+
 interface AuthContextData {
-  user: object
+  user: User
   loading: boolean
   signIn(credentials: SigninCredentials): Promise<void>
   signOut(): void
@@ -48,19 +57,21 @@ export const AuthProvider: React.FunctionComponent = ({ children }) => {
     loadStorageData()
   }, [])
   const signIn = useCallback(async ({ username, password }) => {
-    console.log(`sadad`)
+    try {
+      const response = await api.post('auth/login', {
+        username,
+        password,
+      })
 
-    const response = await api.post('auth/login', {
-      username,
-      password,
-    })
+      const { token, user } = response.data
 
-    const { token, user } = response.data
+      await AsyncStorage.setItem('@Campion:token', token)
+      await AsyncStorage.setItem('@Campion:user', JSON.stringify(user))
 
-    await AsyncStorage.setItem('@Campion:token', token)
-    await AsyncStorage.setItem('@Campion:user', JSON.stringify(user))
-
-    setData({ token, user })
+      setData({ token, user })
+    } catch (error) {
+      console.log(error)
+    }
   }, [])
 
   const signOut = useCallback(async () => {

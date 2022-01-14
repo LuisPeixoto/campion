@@ -6,11 +6,11 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 import Sidebar from '../components/Sidebar'
 import { StatusBar } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
-import Contacts from '../Pages/Contacts'
+import Follower from '../Pages/Follower'
 import Search from '../Pages/Search'
 import Icon from 'react-native-vector-icons/Feather'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import Chat from '../Pages/Chat'
+import { Profile } from '../Pages/Profile'
 
 const App = createStackNavigator()
 
@@ -39,17 +39,42 @@ const AppRoutes: React.FunctionComponent = () => (
         />
 
         <App.Screen
-          name="Contacts"
-          component={Contacts}
+          name="Followers"
           options={{
-            headerTitle: 'Nova Conversa',
+            headerTitle: 'Seguidores',
           }}
-        />
+        >
+          {(props) => <Follower {...props} type="followers" />}
+        </App.Screen>
+
+        <App.Screen
+          name="Following"
+          options={{
+            headerTitle: 'Seguindo',
+          }}
+        >
+          {(props) => <Follower {...props} type="following" />}
+        </App.Screen>
+
+        <App.Screen
+          name="Contacts"
+          options={{
+            headerTitle: 'Lista de Contatos',
+          }}
+        >
+          {(props) => <Follower {...props} type="contacts" />}
+        </App.Screen>
 
         <App.Screen
           name="Search"
           options={{ title: 'Pesquisar' }}
           component={Search}
+        />
+
+        <App.Screen
+          name="Profile"
+          options={{ title: '' }}
+          component={Profile}
         />
 
         <App.Screen name="Chat" component={Chat} />

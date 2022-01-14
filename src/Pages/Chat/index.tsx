@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import io from 'socket.io-client'
 import { GiftedChat } from 'react-native-gifted-chat'
 
+// @ts-ignore
 import { API_URL } from 'react-native-dotenv'
 import { useAuth } from '../../hooks/auth'
 import Api from '../../services/api'
@@ -16,7 +17,6 @@ interface Route {
   route: {
     params: {
       _id: string
-      date: string
       members: object
       user_name: string
     }

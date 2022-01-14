@@ -39,11 +39,12 @@ export const Name = styled.Text`
   font-size: 18px;
   font-family: 'Lato-Bold';
 `
-export const Date = styled.View`
+export const InfoLastMessage = styled.View`
   align-items: flex-end;
 `
 export const MessagePreview = styled.Text`
   color: #837e81;
+  width: 90%;
   margin-top: 6px;
   font-size: 16px;
   font-family: 'Lato-Regular';
